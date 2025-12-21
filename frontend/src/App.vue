@@ -12,7 +12,7 @@ const todos = ref<Todo[]>([
 
 const completedTodos = computed(
   function completedTodos(): number {
-    const comp = todos.value.filter( completed => false );
+    const comp = todos.value.filter( todo => !todo.completed );
     return comp.length;
   })
 </script>
@@ -28,16 +28,16 @@ const completedTodos = computed(
         <li
           v-for="todo in todos"
           :key="todo.id"
-          style="diisplay: flex; align-items: center; gap:0.5rem; margin: 0.25rem 0;"
+          style="display: flex; align-items: center; gap:0.5rem; margin: 0.25rem 0;"
         >
           <input type="checkbox" v-model="todo.completed" />
-          <span :class="{ completed: todo.completed }">
-            {{ todo.title }}
+          <span :style="{ textDecoration: todo.completed ? 'line-through' : 'none' }">
+            {{ todo.text }}
           </span>
         </li>
       </ul>
 
-      <p type="text" v-model="comp">
+      <p type="text">
         todos: {{completedTodos}}
       </p>
 
